@@ -1,0 +1,96 @@
+Importing data set
+
+gc <- read_csv("~/Downloads/gc.csv")
+View(gc)
+
+Summary
+
+Frequency graphs of each attribute
+
+hist(gc$preciptype)
+hist(gc$temp.c)
+hist(gc$apparent_temp)
+hist(gc$humidity)
+hist(gc$wind_speed.km.hr)
+hist(gc$wind_bearing.degree)
+hist(gc$visibility.km)
+hist(gc$pressure.mbars)
+
+Normalising the data using min-max 
+
+normalize <- function(x) { return ((x - min(x)) / (max(x) - min(x))) } //data set is normalized
+gc.subset.n<- as.data.frame(lapply(gc[,2:8], normalize))
+View
+View(gc.subset.n)
+set.seed(123)
+
+Splitting the data into Train and Test datasets
+
+dat.d <- sample(1:nrow(gc.subset.n),size=nrow(gc.subset.n)*0.7,replace = FALSE)//splitting data into train and test set
+train.gc <- gc.subset[dat.d,]
+train.gc <- gc[dat.d,]
+test.gc <- gc[-dat.d,]
+train.gc_labels <- gc[dat.d,1]
+test.gc_labels  <- gc[-dat.d,1]
+library(class)
+NROW(train.gc_labels)
+knn.154 <-  knn(train=train.gc, test=test.gc, cl=train.gc_labels, k=154)//algorithm implementation
+dim(train)
+dim(test.gc_labels)
+dim(train.gc_labels)
+dim(train.gc)
+dim(test.gc)
+train.gc.d<-as.data.frame(train.gc)
+test.gc.d<-as.data.frame(test.gc)
+train.gc_labels.d<-as.data.frame(train.gc_labels)
+test.gc_labels.d<-as.data.frame(test.gc_labels)
+
+dim(train.gc.d)
+dim(test.gc.d)
+dim(train.gc_labels.d)
+dim(test.gc_labels.d)
+
+Function call to knn()
+
+cl=train.gc_labels.d[,1,drop=TRUE]
+m3<-knn(train=train.gc.d,test=test.gc.d,cl,k=154)
+
+CROSS VALIDATION
+
+ACC.26 <- 100 * sum(test.gc_labels.d == m3)/NROW(test.gc_labels.d)
+ACC.26 <- 100 * sum(test.gc_labels == m3)/NROW(test.gc_labels)
+View(m3)
+ACC.26 <- 100 * sum(as.data.frame(test.gc_labels == m3)/NROW(as.data.frame(test.gc_labels))
+);
+ACC.26 <- 100 * sum(as.data.frame((test.gc_labels = m3))/NROW(as.data.frame(test.gc_labels))
+)
+ACC.26 <- 100 * sum(test.gc_labels == m3)/NROW(test.gc_labels)
+ACC.26
+m3<-knn(train=train.gc.d,test=test.gc.d,cl,k=400)
+ACC.26 <- 100 * sum(test.gc_labels == m3)/NROW(test.gc_labels)
+ACC.26
+m3<-knn(train=train.gc.d,test=test.gc.d,cl,k=600)
+m3<-knn(train=train.gc.d,test=test.gc.d,cl,k=500)
+m6<-knn(train=train.gc.d,test=test.gc.d,cl,k=450)
+ACC.26 <- 100 * sum(test.gc_labels == m6)/NROW(test.gc_labels)
+ACC.26
+
+
+
+
+
+Confusion matrix
+
+table(m6 ,test.gc_labels)
+i=1
+
+Consolidated code
+
+k.optm=1
+for (i in 1:28){
+knn.mod <-  knn(train=train.gc, test=test.gc, cl=train.gc_labels, k=i)
+k.optm[i] <- 100 * sum(test.gc_labels == knn.mod)/NROW(test.gc_labels)
+k=i
+cat(k,'=',k.optm[i],'\n')
+}
+
