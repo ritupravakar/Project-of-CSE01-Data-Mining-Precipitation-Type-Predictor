@@ -1,3 +1,3 @@
 Precipitation-Type-Predictor
 
-Predicts the precipitation type based on data of various atmospheric parameters using K-means
+Predicts the precipitation type based on data of various atmospheric parameters using K-means.
