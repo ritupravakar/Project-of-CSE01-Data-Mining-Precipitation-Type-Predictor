@@ -2,7 +2,7 @@
 
 Predicts the precipitation type based on data of various atmospheric parameters using K-means.
 
-##### Team Members
+#### Team Members
 
 | Name  | 
 | ------------- |
